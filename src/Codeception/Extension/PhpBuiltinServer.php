@@ -62,6 +62,9 @@ class PhpBuiltinServer extends Extension
         if (isset($this->config['directoryIndex'])) {
             $parameters .= ' -dcodecept.directory_index="' . $this->config['directoryIndex'] . '"';
         }
+        if (isset($this->config['routeToDirectoryIndex'])) {
+            $parameters .= ' -dcodecept.route_to_directory_index="' . $this->config['routeToDirectoryIndex'] . '"';
+        }
         if ($this->isRemoteDebug()) {
             $parameters .= ' -dxdebug.remote_enable=1';
         }

@@ -9,9 +9,10 @@ class Router
 {
     static public function main()
     {
-        $accessLog      = get_cfg_var('codecept.access_log');
-        $userRouter     = get_cfg_var('codecept.user_router');
-        $directoryIndex = get_cfg_var('codecept.directory_index') ?: 'index.php';
+        $accessLog             = get_cfg_var('codecept.access_log');
+        $userRouter            = get_cfg_var('codecept.user_router');
+        $directoryIndex        = get_cfg_var('codecept.directory_index') ?: 'index.php';
+        $routeToDirectoryIndex = (get_cfg_var('codecept.route_to_directory_index') !== FALSE) ? get_cfg_var('codecept.route_to_directory_index') : 1;
 
         $documentRoot = $_SERVER['DOCUMENT_ROOT'];
         $requestUri   = $_SERVER['REQUEST_URI'];
@@ -36,7 +37,7 @@ class Router
         } elseif ($userRouter) {
             return include $userRouter;
         } else {
-            if (is_dir($filePath) && file_exists($filePath . '/' . $directoryIndex)) {
+            if ($routeToDirectoryIndex && is_dir($filePath) && file_exists($filePath . '/' . $directoryIndex)) {
                 return include $filePath . '/' . $directoryIndex;
             } else {
                 return false; // serve the requested resource as-is.
